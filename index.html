@@ -2,136 +2,174 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Welcome to Kavee's 24th Birthday</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kavee's 24th Birthday | Table Finder</title>
   <style>
+    /* 1. Page Setup */
     body {
       margin: 0;
-      padding: 40px 20px;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      /* Replace 'IMG_3331.jpg' with your actual filename on GitHub */
-      background: black url('background.jpg') no-repeat center center fixed;
-      background-size: cover;
-      text-align: center;
-      color: #f1c40f; /* Fallback gold */
+      padding: 0;
       display: flex;
-      flex-direction: column;
+      justify-content: center;
       align-items: center;
       min-height: 100vh;
+      background-color: #000;
+      /* Background Image Configuration */
+      background-image: url('background.jpg');
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover; /* Desktop default */
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     }
 
-    /* Glassmorphism container to make text readable over the busy background */
-    .container {
-      background: rgba(0, 0, 0, 0.7);
-      padding: 30px;
-      border-radius: 15px;
-      border: 1px solid #d4af37;
-      max-width: 400px;
-      width: 90%;
-      margin-top: 50px;
-      box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+    /* 2. Mobile Optimization for Background */
+    @media (max-width: 600px) {
+      body {
+        /* On mobile, 'contain' ensures the whole invitation fits the screen height */
+        background-size: contain;
+        background-position: center top;
+      }
     }
 
+    /* 3. The Search Box Container */
+    .glass-card {
+      background: rgba(0, 0, 0, 0.75); /* Darker overlay for readability */
+      backdrop-filter: blur(5px);
+      border: 2px solid #d4af37; /* Gold border */
+      border-radius: 20px;
+      padding: 30px 20px;
+      width: 85%;
+      max-width: 350px;
+      text-align: center;
+      box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+      margin: 20px;
+    }
+
+    /* 4. Golden Heading Style */
     h1 {
-      /* Matching the invitation's gold glow */
-      color: #d4af37;
+      color: #ffd700;
+      font-size: 22px;
+      margin-top: 0;
+      margin-bottom: 25px;
       text-transform: uppercase;
-      letter-spacing: 2px;
-      text-shadow: 0 0 10px rgba(212, 175, 55, 0.8), 0 0 20px rgba(212, 175, 55, 0.5);
-      margin-bottom: 30px;
-      font-size: 28px;
+      letter-spacing: 1.5px;
+      /* Gold Glow Effect */
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.7), 
+                   0 0 20px rgba(255, 215, 0, 0.4);
     }
 
+    /* 5. Input Field Style */
     input {
       width: 100%;
-      box-sizing: border-box;
       padding: 15px;
+      border-radius: 50px;
+      border: 1px solid #d4af37;
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
       font-size: 18px;
-      border: 2px solid #d4af37;
-      border-radius: 30px;
-      outline: none;
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
       text-align: center;
+      outline: none;
+      box-sizing: border-box;
+      transition: 0.3s;
     }
 
-    input::placeholder {
-      color: rgba(255, 255, 255, 0.5);
+    input:focus {
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
     }
 
-    .result {
+    /* 6. Result Text Style */
+    #result {
       margin-top: 25px;
-      font-size: 24px;
-      font-weight: bold;
-      color: #ffffff;
-      text-shadow: 0 0 10px #d4af37;
+      min-height: 60px;
+      font-size: 20px;
+      line-height: 1.4;
     }
 
-    b {
+    .success {
       color: #ffd700;
-      font-size: 1.2em;
+      font-weight: bold;
+    }
+
+    .error {
+      color: #ff4d4d;
+      font-size: 16px;
+    }
+
+    .table-num {
+      display: block;
+      font-size: 30px;
+      margin-top: 10px;
+      color: #fff;
+      text-shadow: 0 0 10px #d4af37;
     }
   </style>
 </head>
 <body>
 
-<div class="container">
-  <h1>Welcome to Kavee's 24th Birthday Party</h1>
+  <div class="glass-card">
+    <h1>Welcome to Kavee's 24th Birthday Party</h1>
+    
+    <input 
+      type="text" 
+      id="nameInput" 
+      placeholder="Type your name..." 
+      onkeyup="findTable()"
+      autocomplete="off"
+    >
 
-  <input
-    type="text"
-    id="nameInput"
-    placeholder="Enter your name"
-    onkeyup="findTable()"
-  >
+    <div id="result"></div>
+  </div>
 
-  <div id="result" class="result"></div>
-</div>
+  <script>
+    // LIST OF GUESTS (Add all 70 names here)
+    const guests = {
+      "kavee": "Table 1",
+      "awath": "Table 2",
+      "stalker": "Table 1",
+      "sara": "Table 2",
+      "fatima": "Table 2",
+      "john": "Table 3",
+      "david": "Table 3",
+      "emma": "Table 4",
+      "olivia": "Table 4"
+    };
 
-<script>
-  // Same logic as your original script
-  const guests = {
-    "kavee": "Table 1",
-    "awath": "Table 2",
-    "stalker": "Table 1",
-    "sara": "Table 2",
-    "fatima": "Table 2",
-    "john": "Table 3",
-    "david": "Table 3",
-    "emma": "Table 4",
-    "olivia": "Table 4"
-  };
-
-  function cleanInput(text) {
-    return text.normalize("NFKD").replace(/\s+/g, '').toLowerCase();
-  }
-
-  function findTable() {
-    const rawInput = document.getElementById("nameInput").value;
-    const input = cleanInput(rawInput);
-    const resultBox = document.getElementById("result");
-
-    if (input === "") {
-      resultBox.innerHTML = "";
-      return;
+    function cleanInput(text) {
+      return text
+        .normalize("NFKD")
+        .replace(/\s+/g, '')
+        .toLowerCase();
     }
 
-    const found = Object.keys(guests).find(name => cleanInput(name) === input);
+    function findTable() {
+      const rawInput = document.getElementById("nameInput").value;
+      const input = cleanInput(rawInput);
+      const resultBox = document.getElementById("result");
 
-    if (found) {
-      resultBox.innerHTML = 
-        `✨ Hello ${capitalize(found)}! <br> You are at <b>${guests[found]}</b>`;
-    } else {
-      resultBox.innerHTML = 
-        "<span style='color:#ff6b6b; font-size: 18px;'>Name not found. Please try again!</span>";
+      if (input === "") {
+        resultBox.innerHTML = "";
+        return;
+      }
+
+      const foundName = Object.keys(guests).find(name => cleanInput(name) === input);
+
+      if (foundName) {
+        resultBox.innerHTML = `
+          <div class="success">
+            Hello ${capitalize(foundName)}!<br>
+            <span class="table-num">Seated at ${guests[foundName]}</span>
+          </div>`;
+      } else {
+        resultBox.innerHTML = `<div class="error">❌ Name not found. <br> Please check spelling.</div>`;
+      }
     }
-  }
 
-  function capitalize(text) {
-    return text.charAt(0).toUpperCase() + text.slice(1);
-  }
-</script>
+    function capitalize(text) {
+      return text.charAt(0).toUpperCase() + text.slice(1);
+    }
+  </script>
 
 </body>
 </html>
