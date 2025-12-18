@@ -94,7 +94,7 @@
     <input 
       type="text" 
       id="nameInput" 
-      placeholder="Type first or last name..." 
+      placeholder="Type your name here..." 
       onkeyup="findTable()"
       autocomplete="off"
     >
@@ -117,25 +117,30 @@
     };
 
     function findTable() {
-      // Get the input and keep it as typed (but lowercase)
       const val = document.getElementById("nameInput").value.toLowerCase().trim();
       const res = document.getElementById("result");
       
       if (!val) { res.innerHTML = ""; return; }
 
-      // SEARCH LOGIC: Check if input matches the FULL name OR any part of the name
+      // EXACT MATCH LOGIC for Full Name or Part of Name
       const match = Object.keys(guests).find(fullName => {
-          const nameParts = fullName.toLowerCase().split(' '); // e.g. ["awath", "rusdy"]
-          return fullName.toLowerCase() === val || nameParts.includes(val);
+        const lowerFullName = fullName.toLowerCase();
+        const nameParts = lowerFullName.split(' '); // Splits "awath rusdy" into ["awath", "rusdy"]
+        
+        // Match only if input is EXACTLY the full name or EXACTLY one of the parts
+        return lowerFullName === val || nameParts.includes(val);
       });
 
       if (match) {
-        // Formats the full name for the display (e.g., awath rusdy -> Awath Rusdy)
-        const formattedName = match.split(' ').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' ');
-        res.innerHTML = `Welcome ${formattedName}! You are at <span class="table-highlight">${guests[match]}</span>`;
+        res.innerHTML = `Welcome ${capitalize(match)}! You are at <span class="table-highlight">${guests[match]}</span>`;
       } else {
         res.innerHTML = "<span style='font-size:14px; color:#ff4d4d;'>Name not found</span>";
       }
+    }
+
+    // Capitalizes all parts of the name for display
+    function capitalize(s) {
+      return s.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
     }
   </script>
 </body>
