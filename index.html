@@ -52,7 +52,7 @@
 <div id="result" class="result"></div>
 
 <script>
-  // 👇 ALL NAMES ARE LOWERCASE
+  // 👇 ALL NAMES MUST BE LOWERCASE, NO EXTRA SPACES
   const guests = {
     "kavee": "Table 1",
     "awath": "Table 2",
@@ -63,10 +63,19 @@
     "david": "Table 3",
     "emma": "Table 4",
     "olivia": "Table 4"
+    // continue until 70 names
   };
 
+  function cleanInput(text) {
+    return text
+      .normalize("NFKD")    // normalize Unicode
+      .replace(/\s+/g, '')  // remove all spaces
+      .toLowerCase();       // lowercase
+  }
+
   function findTable() {
-    const input = document.getElementById("nameInput").value.trim().toLowerCase();
+    const rawInput = document.getElementById("nameInput").value;
+    const input = cleanInput(rawInput);
     const resultBox = document.getElementById("result");
 
     if (input === "") {
@@ -74,9 +83,12 @@
       return;
     }
 
-    if (guests[input]) {
+    // Search for cleaned names
+    const found = Object.keys(guests).find(name => cleanInput(name) === input);
+
+    if (found) {
       resultBox.innerHTML =
-        `✅ Hello ${capitalize(input)}! You are seated at <b>${guests[input]}</b>`;
+        `✅ Hello ${capitalize(found)}! You are seated at <b>${guests[found]}</b>`;
     } else {
       resultBox.innerHTML =
         "❌ Name not found. Please check spelling.";
