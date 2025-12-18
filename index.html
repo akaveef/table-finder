@@ -5,18 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Kavee's 24th Birthday - Table Finder</title>
   <style>
+    /* 1. Page & Background Setup */
     html, body {
       height: 100%;
       margin: 0;
       padding: 0;
-      overflow: hidden;
+      overflow: hidden; 
       background-color: #000;
     }
 
     body {
-      /* Ensure the image name matches exactly what you uploaded to GitHub */
       background-image: url('background.jpg');
-      background-position: center bottom; /* Keeps disco ball at bottom */
+      background-position: center center;
       background-repeat: no-repeat;
       background-size: cover; 
       display: flex;
@@ -25,23 +25,25 @@
       font-family: 'Segoe UI', Arial, sans-serif;
     }
 
+    /* 2. Positioning the Search Box at the TOP */
     .glass-card {
-      background: rgba(0, 0, 0, 0.85); 
+      background: rgba(0, 0, 0, 0.8); 
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
-      border-bottom: 2px solid #d4af37;
+      border-bottom: 2px solid #d4af37; 
       padding: 15px;
-      width: 100%;
+      width: 100%; 
       max-width: 450px;
       text-align: center;
       box-shadow: 0 4px 15px rgba(0,0,0,0.5);
       z-index: 100;
       box-sizing: border-box;
+      margin-top: 0; 
     }
 
     h1 {
       color: #ffd700;
-      font-size: 14px;
+      font-size: 16px; 
       margin: 0 0 10px 0;
       text-transform: uppercase;
       letter-spacing: 1px;
@@ -51,7 +53,7 @@
     input {
       width: 90%;
       padding: 12px;
-      border-radius: 8px;
+      border-radius: 8px; 
       border: 1px solid #d4af37;
       background: rgba(255, 255, 255, 0.1);
       color: #fff;
@@ -61,27 +63,25 @@
       box-sizing: border-box;
     }
 
+    /* 3. Result Message Appearance */
     #result {
       margin-top: 10px;
       color: #fff;
       font-weight: bold;
       min-height: 40px;
-      line-height: 1.4;
     }
 
     .table-highlight {
       color: #ffd700;
-      display: block;
-      font-size: 26px;
-      margin-top: 5px;
+      font-size: 24px;
       text-shadow: 0 0 10px rgba(212,175,55,0.8);
     }
 
+    /* 4. Ensuring background is fully visible on Mobile */
     @media (max-width: 600px) {
       body {
-        /* This ensures the whole invitation fits the screen height on mobile */
         background-size: contain; 
-        background-position: center 80px; /* Moves image down slightly below the search bar */
+        background-position: center bottom; 
       }
     }
   </style>
@@ -90,18 +90,20 @@
 
   <div class="glass-card">
     <h1>Kavee's 24th Birthday - Table Finder</h1>
+    
     <input 
       type="text" 
       id="nameInput" 
-      placeholder="Type your first or last name..." 
+      placeholder="Type first or last name..." 
       onkeyup="findTable()"
       autocomplete="off"
     >
+
     <div id="result"></div>
   </div>
 
   <script>
-    // List your guests with full names here
+    // Name List
     const guests = {
       "kavee": "Table 1",
       "awath rusdy": "Table 2",
@@ -115,23 +117,22 @@
     };
 
     function findTable() {
+      // Get the input and keep it as typed (but lowercase)
       const val = document.getElementById("nameInput").value.toLowerCase().trim();
       const res = document.getElementById("result");
       
-      if (val.length < 2) { res.innerHTML = ""; return; } // Don't search until 2 letters typed
+      if (!val) { res.innerHTML = ""; return; }
 
-      // Flexible Search: Check if the typed value exists anywhere in the full name
-      const foundName = Object.keys(guests).find(fullName => 
-        fullName.toLowerCase().includes(val)
-      );
+      // SEARCH LOGIC: Check if input matches the FULL name OR any part of the name
+      const match = Object.keys(guests).find(fullName => {
+          const nameParts = fullName.toLowerCase().split(' '); // e.g. ["awath", "rusdy"]
+          return fullName.toLowerCase() === val || nameParts.includes(val);
+      });
 
-      if (foundName) {
-        // Format the display name (Capitalize each part of the name)
-        const displayName = foundName.split(' ').map(word => 
-          word.charAt(0).toUpperCase() + word.slice(1)
-        ).join(' ');
-
-        res.innerHTML = `Welcome ${displayName}! <br> You are at <span class="table-highlight">${guests[foundName]}</span>`;
+      if (match) {
+        // Formats the full name for the display (e.g., awath rusdy -> Awath Rusdy)
+        const formattedName = match.split(' ').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' ');
+        res.innerHTML = `Welcome ${formattedName}! You are at <span class="table-highlight">${guests[match]}</span>`;
       } else {
         res.innerHTML = "<span style='font-size:14px; color:#ff4d4d;'>Name not found</span>";
       }
