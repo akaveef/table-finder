@@ -2,75 +2,109 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Table Finder</title>
+  <title>Welcome to Kavee's 24th Birthday</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <style>
     body {
       margin: 0;
       padding: 40px 20px;
-      font-family: Arial, Helvetica, sans-serif;
-      background-color: #f7f7f7;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      /* Replace 'IMG_3331.jpg' with your actual filename on GitHub */
+      background: black url('background.jpg') no-repeat center center fixed;
+      background-size: cover;
       text-align: center;
+      color: #f1c40f; /* Fallback gold */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
     }
 
-    h2 {
-      color: #2c3e50;
-      margin-bottom: 20px;
+    /* Glassmorphism container to make text readable over the busy background */
+    .container {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 30px;
+      border-radius: 15px;
+      border: 1px solid #d4af37;
+      max-width: 400px;
+      width: 90%;
+      margin-top: 50px;
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+    }
+
+    h1 {
+      /* Matching the invitation's gold glow */
+      color: #d4af37;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 0 0 10px rgba(212, 175, 55, 0.8), 0 0 20px rgba(212, 175, 55, 0.5);
+      margin-bottom: 30px;
+      font-size: 28px;
     }
 
     input {
       width: 100%;
-      max-width: 320px;
-      padding: 12px;
+      box-sizing: border-box;
+      padding: 15px;
       font-size: 18px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
+      border: 2px solid #d4af37;
+      border-radius: 30px;
       outline: none;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      text-align: center;
+    }
+
+    input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
     }
 
     .result {
       margin-top: 25px;
-      font-size: 22px;
+      font-size: 24px;
       font-weight: bold;
-      color: #2c3e50;
+      color: #ffffff;
+      text-shadow: 0 0 10px #d4af37;
+    }
+
+    b {
+      color: #ffd700;
+      font-size: 1.2em;
     }
   </style>
 </head>
-
 <body>
 
-<h2>🎉 Find Your Table</h2>
+<div class="container">
+  <h1>Welcome to Kavee's 24th Birthday Party</h1>
 
-<input
-  type="text"
-  id="nameInput"
-  placeholder="Enter your name"
-  onkeyup="findTable()"
->
+  <input
+    type="text"
+    id="nameInput"
+    placeholder="Enter your name"
+    onkeyup="findTable()"
+  >
 
-<div id="result" class="result"></div>
+  <div id="result" class="result"></div>
+</div>
 
 <script>
-  // 👇 ALL NAMES MUST BE LOWERCASE, NO EXTRA SPACES
+  // Same logic as your original script
   const guests = {
-    "kavee": "Table 11",
-    "awath": "Table 10",
+    "kavee": "Table 1",
+    "awath": "Table 2",
     "stalker": "Table 1",
-    "sara": "Table 22",
+    "sara": "Table 2",
     "fatima": "Table 2",
-    "john": "Table 31",
-    "david": "Table 32",
+    "john": "Table 3",
+    "david": "Table 3",
     "emma": "Table 4",
     "olivia": "Table 4"
-    // continue until 70 names
   };
 
   function cleanInput(text) {
-    return text
-      .normalize("NFKD")    // normalize Unicode
-      .replace(/\s+/g, '')  // remove all spaces
-      .toLowerCase();       // lowercase
+    return text.normalize("NFKD").replace(/\s+/g, '').toLowerCase();
   }
 
   function findTable() {
@@ -83,15 +117,14 @@
       return;
     }
 
-    // Search for cleaned names
     const found = Object.keys(guests).find(name => cleanInput(name) === input);
 
     if (found) {
-      resultBox.innerHTML =
-        `✅ Hello ${capitalize(found)}! You are seated at <b>${guests[found]}</b>`;
+      resultBox.innerHTML = 
+        `✨ Hello ${capitalize(found)}! <br> You are at <b>${guests[found]}</b>`;
     } else {
-      resultBox.innerHTML =
-        "❌ Name not found. Please check spelling.";
+      resultBox.innerHTML = 
+        "<span style='color:#ff6b6b; font-size: 18px;'>Name not found. Please try again!</span>";
     }
   }
 
