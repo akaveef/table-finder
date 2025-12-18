@@ -103,17 +103,34 @@
   </div>
 
   <script>
-    // Name List
     const guests = {
-      "kavee": "Table 1",
-      "awath rusdy": "Table 2",
-      "mister stalker": "Table 1",
-      "sara": "Table 2",
-      "fatima": "Table 2",
-      "john ceena": "Table 3",
-      "david": "Table 3",
-      "emma": "Table 4",
-      "olivia": "Table 4"
+      // Table 1
+      "anagi perera": "Table 1", "triwasha silva": "Table 1", "michelle jeganathan": "Table 1", 
+      "renata steinwall": "Table 1", "krishni gomez": "Table 1", "dinisha bopitiya": "Table 1", "vinuki thomas": "Table 1",
+      
+      // Table 2
+      "arushi shenali nathasha": "Table 2", "naveen dulaj kosgoda": "Table 2", "nishad athawuda": "Table 2", 
+      "sajani pathiranage": "Table 2", "chaya samarasinghe": "Table 2", "nethmi weerakkodi": "Table 2", 
+      "nethmi sandaprabha": "Table 2", "diwakara": "Table 2", "yasitha rajapaksha": "Table 2",
+      
+      // Table 3
+      "dulashi fernando": "Table 3", "siluni perera": "Table 3", "peshadi rathnayaka": "Table 3", 
+      "lohansa fernando": "Table 3", "pribashika perera": "Table 3", "kokila nuwanthi": "Table 3", 
+      "ravishka sulakshana": "Table 3", "chamathi lawanya": "Table 3", "sandali prabuddhi": "Table 3", "mewan kodippili": "Table 3",
+      
+      // Table 4
+      "vihanga samaranayaka": "Table 4", "vishal samaranayaka": "Table 4", "navoda bandara": "Table 4", 
+      "niwantha naweendrajith": "Table 4", "thanuri de silva": "Table 4", "thirushi wanniarachchi": "Table 4", 
+      "radil dharmasriya": "Table 4", "himal prabhashwara": "Table 4",
+      
+      // Table 5
+      "ometh fernando": "Table 5", "thejan fernando": "Table 5", "manula premabandu": "Table 5", 
+      "praveen peiris": "Table 5", "shashin fernando": "Table 5", "irfana": "Table 5", 
+      "irshada": "Table 5", "kumudu": "Table 5", "roshini": "Table 5",
+      
+      // Table 6
+      "gayan": "Table 6", "sheruni fernando": "Table 6", "vishan silva": "Table 6", 
+      "minoli fernando": "Table 6", "sajith mohan": "Table 6"
     };
 
     function findTable() {
@@ -122,12 +139,10 @@
       
       if (!val) { res.innerHTML = ""; return; }
 
-      // EXACT MATCH LOGIC for Full Name or Part of Name
       const match = Object.keys(guests).find(fullName => {
         const lowerFullName = fullName.toLowerCase();
-        const nameParts = lowerFullName.split(' '); // Splits "awath rusdy" into ["awath", "rusdy"]
+        const nameParts = lowerFullName.split(' '); 
         
-        // Match only if input is EXACTLY the full name or EXACTLY one of the parts
         return lowerFullName === val || nameParts.includes(val);
       });
 
@@ -138,7 +153,6 @@
       }
     }
 
-    // Capitalizes all parts of the name for display
     function capitalize(s) {
       return s.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
     }
