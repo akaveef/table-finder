@@ -3,101 +3,99 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Kavee's 24th</title>
+  <title>Kavee's 24th Table Finder</title>
   <style>
-    /* 1. Force the background to fill the screen without scrolling */
+    /* 1. Page & Background Setup */
     html, body {
       height: 100%;
       margin: 0;
       padding: 0;
-      overflow: hidden; /* Prevents accidental scrolling */
+      overflow: hidden; /* Keeps the background from jumping when keyboard opens */
       background-color: #000;
     }
 
     body {
       background-image: url('background.jpg');
+      /* This keeps the bottom disco ball visible and centers the image */
       background-position: center center;
       background-repeat: no-repeat;
-      /* 'cover' for desktop, we will override for mobile below */
       background-size: cover; 
       display: flex;
       flex-direction: column;
       align-items: center;
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Segoe UI', Arial, sans-serif;
     }
 
-    /* 2. MOBILE FIX: Force image to stretch to exactly phone dimensions */
-    @media (max-width: 600px) {
-      body {
-        background-size: 100% 100%; /* Forces the invitation to fit the phone screen exactly */
-        background-attachment: scroll;
-      }
-      
-      .glass-card {
-        margin-top: 50% !important; /* Pushes the box down so it doesn't hide "Kavee Turns 24" */
-      }
-    }
-
-    /* 3. The Search Box */
+    /* 2. Positioning the Search Box at the TOP */
     .glass-card {
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border: 1px solid #d4af37;
-      border-radius: 15px;
-      padding: 20px;
-      width: 80%;
-      max-width: 300px;
+      background: rgba(0, 0, 0, 0.8); /* Darker for high contrast */
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 2px solid #d4af37; /* Gold line at bottom of box */
+      padding: 15px;
+      width: 100%; /* Spans across the top */
+      max-width: 450px;
       text-align: center;
-      margin-top: 150px; /* Desktop spacing */
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      z-index: 100;
+      box-sizing: border-box;
+      margin-top: 0; /* Sticks it to the very top */
     }
 
     h1 {
       color: #ffd700;
-      font-size: 18px;
-      margin: 0 0 15px 0;
+      font-size: 16px; /* Smaller so it doesn't take much space */
+      margin: 0 0 10px 0;
       text-transform: uppercase;
-      text-shadow: 0 0 8px rgba(212, 175, 55, 0.8);
+      letter-spacing: 1px;
+      text-shadow: 0 0 5px rgba(212, 175, 55, 0.8);
     }
 
     input {
-      width: 100%;
+      width: 90%;
       padding: 12px;
-      border-radius: 25px;
+      border-radius: 8px; /* Slightly more square for a modern look */
       border: 1px solid #d4af37;
       background: rgba(255, 255, 255, 0.1);
       color: #fff;
-      font-size: 16px;
+      font-size: 18px;
       text-align: center;
       outline: none;
       box-sizing: border-box;
     }
 
+    /* 3. Result Message Appearance */
     #result {
-      margin-top: 15px;
+      margin-top: 10px;
       color: #fff;
       font-weight: bold;
+      min-height: 40px;
     }
 
     .table-highlight {
-      display: block;
-      font-size: 28px;
       color: #ffd700;
-      margin-top: 5px;
-      text-shadow: 0 0 10px rgba(212,175,55,0.5);
+      font-size: 24px;
+      text-shadow: 0 0 10px rgba(212,175,55,0.8);
+    }
+
+    /* 4. Ensuring background is fully visible on Mobile */
+    @media (max-width: 600px) {
+      body {
+        background-size: contain; /* Shows the whole invitation without cropping */
+        background-position: center bottom; /* Keeps the text/disco ball in view */
+      }
     }
   </style>
 </head>
 <body>
 
   <div class="glass-card">
-    <h1>Welcome to Kavee's 24th Birthday</h1>
+    <h1>Kavee's 24th Birthday - Table Finder</h1>
     
     <input 
       type="text" 
       id="nameInput" 
-      placeholder="Enter Name" 
+      placeholder="Type your name here..." 
       onkeyup="findTable()"
       autocomplete="off"
     >
@@ -106,6 +104,7 @@
   </div>
 
   <script>
+    // Name List
     const guests = {
       "kavee": "Table 1",
       "awath": "Table 2",
@@ -116,10 +115,11 @@
       "david": "Table 3",
       "emma": "Table 4",
       "olivia": "Table 4"
+      // Add more names here...
     };
 
     function findTable() {
-      const val = document.getElementById("nameInput").value.toLowerCase().replace(/\s+/g, '');
+      const val = document.getElementById("nameInput").value.toLowerCase().trim().replace(/\s+/g, '');
       const res = document.getElementById("result");
       
       if (!val) { res.innerHTML = ""; return; }
@@ -127,10 +127,14 @@
       const match = Object.keys(guests).find(n => n.toLowerCase() === val);
 
       if (match) {
-        res.innerHTML = `Hi ${match.charAt(0).toUpperCase() + match.slice(1)}!<br> <span class="table-highlight">${guests[match]}</span>`;
+        res.innerHTML = `Welcome ${capitalize(match)}! You are at <span class="table-highlight">${guests[match]}</span>`;
       } else {
-        res.innerHTML = "<span style='font-size:12px; color:#aaa;'>Name not found</span>";
+        res.innerHTML = "<span style='font-size:14px; color:#ff4d4d;'>Name not found</span>";
       }
+    }
+
+    function capitalize(s) {
+      return s.charAt(0).toUpperCase() + s.slice(1);
     }
   </script>
 </body>
