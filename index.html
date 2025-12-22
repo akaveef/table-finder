@@ -114,25 +114,24 @@
       "nethmi sandaprabha": "Table 2", "diwakara": "Table 2", "yasitha rajapaksha": "Table 2",
       
       // Table 3
-      "dulashi fernando": "Table 3", "siluni perera": "Table 3", "peshadi rathnayaka": "Table 3", "lohansa fernando": "Table 3",
-      
+      "dulashi fernando": "Table 3", "siluni perera": "Table 3", "peshadi rathnayaka": "Table 3", 
+      "lohansa fernando": "Table 3", "thanuri de silva": "Table 3", "thirushi wanniarachchi": "Table 3", "radil dharmasriya": "Table 3",
+
       // Table 4
-      "navoda bandara": "Table 4", "niwantha naweendrajith": "Table 4", "thanuri de silva": "Table 4", 
-      "thirushi wanniarachchi": "Table 4", "radil dharmasriya": "Table 4", "himal prabhashwara": "Table 4",
-      
+      "navoda bandara": "Table 4", "himal prabhashwara": "Table 4", "dinuk fernando": "Table 4",
+
       // Table 5
       "ometh fernando": "Table 5", "thejan fernando": "Table 5", "manula premabandu": "Table 5", 
       "praveen peiris": "Table 5", "shashin fernando": "Table 5", "irfana": "Table 5", 
       "irshada": "Table 5", "kumudu": "Table 5", "roshini": "Table 5",
       
       // Table 6
-      "gayan": "Table 6", "sheruni fernando": "Table 6", "vishan silva": "Table 6", "Dinuk Fernando": "Sorry No Table For You",
+      "gayan": "Table 6", "sheruni fernando": "Table 6", "vishan silva": "Table 6",
 
       // Table 7
       "pribashika perera": "Table 7", "kokila nuwanthi": "Table 7", "ravishka sulakshana": "Table 7", 
       "chamathi lawanya": "Table 7", "sandali prabuddhi": "Table 7", "tilan fernando": "Table 7", 
-      "vihanga samaranayaka": "Table 7", "vishal samaranayaka": "Table 7", "navod nanayakkara": "Table 7", 
-      "ravindi nanayakkara": "Table 7"
+      "navod nanayakkara": "Table 7", "ravindi nanayakkara": "Table 7"
     };
 
     function findTable() {
@@ -141,10 +140,16 @@
       
       if (!val) { res.innerHTML = ""; return; }
 
+      // 1. Check for "Nethmi" duplicates first
+      if (val === "nethmi") {
+        res.innerHTML = "<span style='font-size:14px; color:#ffd700;'>Hi Nethmi! <br>Please type your full name.</span>";
+        return;
+      }
+
+      // 2. Standard Search Logic
       const match = Object.keys(guests).find(fullName => {
         const lowerFullName = fullName.toLowerCase();
         const nameParts = lowerFullName.split(' '); 
-        
         return lowerFullName === val || nameParts.includes(val);
       });
 
