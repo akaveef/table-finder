@@ -77,7 +77,7 @@
       text-shadow: 0 0 10px rgba(212,175,55,0.8);
     }
 
-    /* 4. Ensuring background is fully visible on Mobile */
+    /* 4. Mobile Responsiveness */
     @media (max-width: 600px) {
       body {
         background-size: contain; 
@@ -118,7 +118,7 @@
       "lohansa fernando": "Table 3", "thanuri de silva": "Table 3", "thirushi wanniarachchi": "Table 3", "radil dharmasriya": "Table 3",
 
       // Table 4
-      "navoda bandara": "Table 4", "himal prabhashwara": "Table 4", "dinuk fernando": "Table 4",
+      "navoda bandara": "Table 4", "himal prabhashwara": "Table 4", "dinuk fernando": "Table 4", "kavee": "Table 4",
 
       // Table 5
       "ometh fernando": "Table 5", "thejan fernando": "Table 5", "manula premabandu": "Table 5", 
@@ -140,13 +140,12 @@
       
       if (!val) { res.innerHTML = ""; return; }
 
-      // 1. Check for "Nethmi" duplicates first
+      // Special logic for Nethmi duplicates
       if (val === "nethmi") {
         res.innerHTML = "<span style='font-size:14px; color:#ffd700;'>Hi Nethmi! <br>Please type your full name.</span>";
         return;
       }
 
-      // 2. Standard Search Logic
       const match = Object.keys(guests).find(fullName => {
         const lowerFullName = fullName.toLowerCase();
         const nameParts = lowerFullName.split(' '); 
@@ -154,7 +153,9 @@
       });
 
       if (match) {
-        res.innerHTML = `Welcome ${capitalize(match)}! You are at <span class="table-highlight">${guests[match]}</span>`;
+        // Custom display for Kavee
+        const displayName = (match === "kavee") ? "The Birthday Girl😏" : capitalize(match);
+        res.innerHTML = `Welcome ${displayName}! You are at <span class="table-highlight">${guests[match]}</span>`;
       } else {
         res.innerHTML = "<span style='font-size:14px; color:#ff4d4d;'>Name not found</span>";
       }
