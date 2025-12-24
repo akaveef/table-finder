@@ -114,24 +114,25 @@
       "nethmi sandaprabha": "Table 2", "diwakara": "Table 2", "yasitha rajapaksha": "Table 2",
       
       // Table 3
-      "dulashi fernando": "Table 3", "peshadi rathnayaka": "Table 3", 
+      "dulashi fernando": "Table 3", "siluni perera": "Table 3", "peshadi rathnayaka": "Table 3", 
       "lohansa fernando": "Table 3", "thanuri de silva": "Table 3", "thirushi wanniarachchi": "Table 3", "radil dharmasriya": "Table 3",
 
       // Table 4
-      "navoda bandara": "Table 4", "himal prabhashwara": "Table 4", "dinuk fernando": "Table 4", "kavee": "Table 4",
+      "navoda bandara": "Table 4", "himal prabhashwara": "Table 4", "dinuk fernando": "Table 4",
+      "ometh fernando": "Table 4", "thejan fernando": "Table 4", "manula premabandu": "Table 4", 
+      "praveen peiris": "Table 4", "shashin fernando": "Table 4", "irfana": "Table 4", "irshada": "Table 4",
 
       // Table 5
-      "ometh fernando": "Table 5", "thejan fernando": "Table 5", "manula premabandu": "Table 5", 
-      "praveen peiris": "Table 5", "shashin fernando": "Table 5", "irfana": "Table 5", 
-      "irshada": "Table 5", "kumudu": "Table 5", "roshini": "Table 5",
+      "nimali aunty": "Table 5", "sanjeewani aunty": "Table 5", "indrajith uncle": "Table 5", 
+      "chamila aunty": "Table 5", "rasika aunty": "Table 5", "kumudu": "Table 5", "roshini": "Table 5",
       
       // Table 6
       "gayan": "Table 6", "sheruni fernando": "Table 6", "vishan silva": "Table 6",
 
       // Table 7
       "pribashika perera": "Table 7", "kokila nuwanthi": "Table 7", "ravishka sulakshana": "Table 7", 
-      "chamathi lawanya": "Table 7", "sandali prabuddhi": "Table 7", "tilan fernando": "Table 7",
-      "Anuja Sandeepa": "Table 7"
+      "chamathi lawanya": "Table 7", "sandali prabuddhi": "Table 7", "tilan fernando": "Table 7", 
+      "navod nanayakkara": "Table 7", "ravindi nanayakkara": "Table 7"
     };
 
     function findTable() {
@@ -153,9 +154,7 @@
       });
 
       if (match) {
-        // Custom display for Kavee
-        const displayName = (match === "kavee") ? "The Birthday Girl💃👸" : capitalize(match);
-        res.innerHTML = `Welcome ${displayName}! You are at <span class="table-highlight">${guests[match]}</span>`;
+        res.innerHTML = `Welcome ${capitalize(match)}! You are at <span class="table-highlight">${guests[match]}</span>`;
       } else {
         res.innerHTML = "<span style='font-size:14px; color:#ff4d4d;'>Name not found</span>";
       }
@@ -166,4 +165,4 @@
     }
   </script>
 </body>
-</html>
+</html
